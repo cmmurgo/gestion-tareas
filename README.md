@@ -5,24 +5,18 @@ Este es un proyecto de **gestión de tareas** desarrollado con Node.js, Express 
 ## Instalación
 
 1. Clona el repositorio:
-    ```bash
     git clone https://github.com/tu-usuario/tu-repositorio.git
-    ```
 
 2. Ve al directorio del proyecto:
-    ```bash
     cd gestion-tareas
-    ```
 
-3. Instala las dependencias:
-    ```bash
+3. Instala las dependencias: 
     npm install
-    ```
 
-4. Inicia la aplicación:
-    ```bash
-    npm start
-    ```
+4. Inicia la aplicación: 
+    npm start  (en produccion)
+	npm run dev (para desarrollo)
+
 
 ## Uso
 

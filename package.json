@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",  
+    "dev": "nodemon app.js"  
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["gestión", "tareas", "express", "mongoose"],
+  "author": "Tu Nombre",
   "license": "ISC",
-  "description": "",
+  "description": "Sistema de gestión de tareas basado en Express y MongoDB.",
   "dependencies": {
     "express": "^4.21.0",
     "mongoose": "^8.7.0"
