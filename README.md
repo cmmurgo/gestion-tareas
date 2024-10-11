@@ -61,9 +61,7 @@ Pasos para crear el proyecto:
     	└── tareas.js
     ├── models
     	└── tarea.js
-	└── app.js
-	
-	6-npm start //Para iniciar el proyecto
+	└── app.js	
 
 Instalar Mongoose en el proyecto:
 	1- instalar Mongoose en el proyecto (npm install mongoose)
