@@ -1,19 +1,15 @@
-const usuarios = [
-    { username: 'admin', password: 'admin' }
-];
+// controllers/auth.js
 
-exports.iniciarSesion = (req, res) => {
+const login = (req, res) => {
     const { username, password } = req.body;
-    const usuario = usuarios.find(u => u.username === username && u.password === password);
+    const usuario = { username: 'admin', password: 'admin' }; // Simulación, reemplaza con DB
 
-    if (!usuario) {
-        return res.status(401).json({ error: 'Credenciales incorrectas' });
+    if (username === usuario.username && password === usuario.password) {
+        req.session.usuario = usuario; // Guardar usuario en sesión
+        res.redirect('/'); // Redirigir al panel si las credenciales son correctas
+    } else {
+        res.redirect('/login?error=Credenciales incorrectas'); // Redirige al login con error
     }
-    req.session.usuario = usuario;
-    res.json({ mensaje: 'Inicio de sesión exitoso' });
 };
 
-exports.cerrarSesion = (req, res) => {
-    req.session.destroy();
-    res.json({ mensaje: 'Sesión cerrada' });
-};
+module.exports = { login };

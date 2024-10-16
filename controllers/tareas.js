@@ -1,5 +1,5 @@
 // controllers/tareas.js
-const Tarea = require('../models/tarea');
+const Tarea = require('../models/Tarea');
 
 // Controlador para obtener todas las tareas
 exports.obtenerTareas = async (req, res) => {
@@ -10,6 +10,17 @@ exports.obtenerTareas = async (req, res) => {
         res.status(500).json({ error: 'Error al obtener las tareas' });
     }
 };
+
+// Controlador para obtener todas las tareas
+exports.verTareas = async (req, res) => {
+    try {
+        const tareas = await Tarea.find(); // Obtener todas las tareas de la BD
+        res.render('tareas', { tareas });  // Renderiza la vista y pasa las tareas
+      } catch (error) {
+        console.error('Error al obtener las tareas:', error);
+        res.status(500).send('Error al obtener las tareas');
+      }
+    };
 
 // Controlador para obtener una tarea por ID
 exports.obtenerTareaPorId = async (req, res) => {
@@ -54,7 +65,7 @@ exports.crearTarea = async (req, res) => {
     }
 };
 
-// Controlador para actualizar una tarea
+// Controlador para actualizar una tarea mediante Thunder Client
 exports.actualizarTarea = async (req, res) => {
     try {
         const tareaActualizada = await Tarea.findOneAndUpdate(
@@ -72,7 +83,7 @@ exports.actualizarTarea = async (req, res) => {
 };
 
 
-// Controlador para eliminar una tarea
+// Controlador para eliminar una tarea mediante Thunder Client
 exports.eliminarTarea = async (req, res) => {
     try {
         const tareaEliminada = await Tarea.findOneAndDelete({ id: req.params.id });  // Busca por el campo `id` numérico
