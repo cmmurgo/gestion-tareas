@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title Lista de Tareas
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css")
+  body
+    .container.mt-5
+      h1.text-center Lista de Tareas
+
+      table.table.table-striped.table-bordered.mt-4
+        thead
+          tr
+            th Área
+            th Tarea
+            th Responsable
+            th Estado
+            th Prioridad
+        tbody
+          each tarea in tareas
+            tr
+              td= tarea.area
+              td= tarea.tarea
+              td= tarea.usuario
+              td= tarea.estado
+              td= tarea.prioridad
+              td
+                // Botón para editar
+                a(href=`/api/tareas/editar/${tarea._id}` class="btn btn-warning btn-sm") Editar
+                // Formulario para eliminar tarea
+                form(action=`/api/tareas/eliminar/${tarea._id}` method="POST" style="display:inline-block;")
+                  button(type="submit" class="btn btn-danger btn-sm") Eliminar
+                  
+      //- Botón para volver
+      .mt-4.text-center
+        a.btn.btn-secondary(href="/") Volver
