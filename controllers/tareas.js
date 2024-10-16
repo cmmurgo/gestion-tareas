@@ -25,6 +25,24 @@ exports.obtenerTareaPorId = async (req, res) => {
     }
 };
 
+// Obtener todas las tareas con filtros
+exports.obtenerTareas = async (req, res) => {
+    try {
+        const { area, estado, prioridad, usuario } = req.query;
+        const filtro = {};
+
+        if (area) filtro.area = area;
+        if (estado) filtro.estado = estado;
+        if (prioridad) filtro.prioridad = prioridad;
+        if (usuario) filtro.usuario = usuario;
+
+        const tareas = await Tarea.find(filtro);
+        res.json(tareas);
+    } catch (err) {
+        res.status(500).json({ error: 'Error al obtener las tareas' });
+    }
+};
+
 // Controlador para crear una nueva tarea
 exports.crearTarea = async (req, res) => {
     const nuevaTarea = new Tarea(req.body);
