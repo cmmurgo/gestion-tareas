@@ -52,18 +52,7 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// Montar las rutas de tareas con el prefijo /api/tareas (formato json)
-app.use('/tareas', tareasRoutes);
-
-// Montar las rutas de tareas con el prefijo /api/tareas
-app.use('/api/tareas', tareasRoutes);
-
-// Ruta para mostrar el formulario de nueva tarea
-app.get('/tareas/nueva', (req, res) => {
-    res.render('nueva-tarea'); // Renderiza la vista nueva-tarea.pug
-});
-
-// Ruta para eliminar tareas
+// Montar las rutas de tareas con el prefijo /tareas
 app.use('/tareas', tareasRoutes);
 
 // Conexión a MongoDB

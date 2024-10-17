@@ -6,7 +6,7 @@ html
   body
     .container
       h1 Editar Tarea
-      form(action=`/api/tareas/editar/${tarea._id}` method="POST")
+      form(action=`/tareas/editar/${tarea._id}` method="POST")
         .mb-3
           label(for="tarea") Tarea
           input(type="text" name="tarea" id="tarea" class="form-control" value=tarea.tarea required)
