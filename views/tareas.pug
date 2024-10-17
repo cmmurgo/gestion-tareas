@@ -25,9 +25,9 @@ html
               td= tarea.prioridad
               td
                 // Botón para editar
-                a(href=`/api/tareas/editar/${tarea._id}` class="btn btn-warning btn-sm") Editar
+                a(href=`/tareas/editar/${tarea._id}` class="btn btn-warning btn-sm") Editar
                 // Formulario para eliminar tarea
-                form(action=`/api/tareas/eliminar/${tarea._id}` method="POST" style="display:inline-block;")
+                form(action=`/tareas/eliminar/${tarea._id}` method="POST" style="display:inline-block;")
                   button(type="submit" class="btn btn-danger btn-sm") Eliminar
                   
       //- Botón para volver

@@ -29,6 +29,7 @@ Puedes interactuar con la API mediante herramientas como [Postman](https://www.p
 - `POST /tareas`: Crea una nueva tarea.
 - `PUT /tareas/:id`: Actualiza una tarea existente.
 - `DELETE /tareas/:id`: Elimina una tarea por su ID.
+- `FILTRAR /tareas/filtrar`: Filtra una tarea por area, estado, prioridad, usuario. 
 
 ## Dependencias
 

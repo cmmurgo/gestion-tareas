@@ -22,7 +22,7 @@ exports.verTareas = async (req, res) => {
       }
     };
 
-// Controlador para obtener una tarea por ID
+// Controlador para obtener una tarea por ID para Thunder Client
 exports.obtenerTareaPorId = async (req, res) => {
     try {
         // Busca por el campo 'id'
@@ -36,10 +36,12 @@ exports.obtenerTareaPorId = async (req, res) => {
     }
 };
 
-// Obtener todas las tareas con filtros
-exports.obtenerTareas = async (req, res) => {
+// Obtener todas las tareas con filtros para Thunder Client
+exports.obtenerTareasFiltros = async (req, res) => {
     try {
         const { area, estado, prioridad, usuario } = req.query;
+        console.log('Filtros recibidos:', { area, estado, prioridad, usuario }); // Agrega esta línea
+
         const filtro = {};
 
         if (area) filtro.area = area;
@@ -54,7 +56,7 @@ exports.obtenerTareas = async (req, res) => {
     }
 };
 
-// Controlador para crear una nueva tarea
+// Controlador para crear una nueva tarea para Thunder Client
 exports.crearTarea = async (req, res) => {
     const nuevaTarea = new Tarea(req.body);
     try {
@@ -65,7 +67,7 @@ exports.crearTarea = async (req, res) => {
     }
 };
 
-// Controlador para actualizar una tarea mediante Thunder Client
+// Controlador para actualizar una tarea para Thunder Client
 exports.actualizarTarea = async (req, res) => {
     try {
         const tareaActualizada = await Tarea.findOneAndUpdate(
@@ -83,7 +85,7 @@ exports.actualizarTarea = async (req, res) => {
 };
 
 
-// Controlador para eliminar una tarea mediante Thunder Client
+// Controlador para eliminar una tarea para Thunder Client
 exports.eliminarTarea = async (req, res) => {
     try {
         const tareaEliminada = await Tarea.findOneAndDelete({ id: req.params.id });  // Busca por el campo `id` numérico
