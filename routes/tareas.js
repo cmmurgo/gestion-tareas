@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Tarea = require('../models/Tarea');
 const tareasController = require('../controllers/tareas');
-const { verTareas, obtenerTareasFiltros, obtenerTareaPorId, eliminarTarea  } = require('../controllers/tareas');
+const { verTareas, obtenerTareasFiltros, obtenerTareaPorId, eliminarTarea } = require('../controllers/tareas');
 
 // Ruta para renderizar la vista de agregar nueva tarea por formulario
 router.get('/nueva', (req, res) => {
@@ -29,27 +29,7 @@ router.delete('/:id', eliminarTarea)
 router.post('/enviar', tareasController.crearTarea)
 
 // Ruta para crear una nueva tarea o por formulario
-router.post('/', async (req, res) => {
-    const { id, tarea, usuario, area, estado, prioridad, fechaVencimiento } = req.body;
-
-    try {
-        const nuevaTarea = new Tarea({
-            id,
-            tarea,
-            usuario,
-            area,
-            estado,
-            prioridad,
-            fechaVencimiento,
-        });
-
-        await nuevaTarea.save(); // Guarda la tarea en la base de datos
-        res.redirect('/'); // Redirige al panel principal
-    } catch (error) {
-        console.error('Error al guardar la tarea:', error);
-        res.status(500).send('Hubo un error al crear la tarea.');
-    }
-});
+router.post('/', tareasController.agregarTarea)
 
 // Ruta para mostrar el formulario de edición de tarea
 router.get('/editar/:id', async (req, res) => {

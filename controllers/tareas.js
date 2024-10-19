@@ -22,6 +22,18 @@ exports.verTareas = async (req, res) => {
       }
     };
 
+// Controlador para crear una nueva tarea por formulario
+exports.agregarTarea = async (req, res) => {
+    const nuevaTarea = new Tarea(req.body);
+    try {
+        const tareaGuardada = await nuevaTarea.save();
+        res.redirect('/'); // Redirige al panel principal
+    } catch (err) {
+        console.error('Error al guardar la tarea:', error);
+        res.status(500).send('Hubo un error al crear la tarea.');
+    }
+};
+
 // Controlador para obtener una tarea por ID para Thunder Client
 exports.obtenerTareaPorId = async (req, res) => {
     try {
