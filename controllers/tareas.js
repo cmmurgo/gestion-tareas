@@ -110,3 +110,53 @@ exports.eliminarTarea = async (req, res) => {
     }
 };
 
+// Controlador para mostrar el formulario de edición de tarea
+exports.mostrarFormularioEdicion = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const tarea = await Tarea.findById(id);
+        if (!tarea) {
+            return res.status(404).send('Tarea no encontrada');
+        }
+        res.render('editarTarea', { tarea });
+    } catch (error) {
+        console.error('Error al obtener la tarea para editar:', error);
+        res.status(500).send('Error al cargar la tarea para editar');
+    }
+};
+
+// Controlador para actualizar una tarea
+exports.actualizarTarea = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { tarea, usuario, area, estado, prioridad, fechaVencimiento } = req.body;
+
+        await Tarea.findByIdAndUpdate(id, {
+            tarea,
+            usuario,
+            area,
+            estado,
+            prioridad,
+            fechaVencimiento,
+        });
+
+        res.redirect('/tareas/ver'); // Redirige a la lista de tareas
+    } catch (error) {
+        console.error('Error al actualizar la tarea:', error);
+        res.status(500).send('Error al actualizar la tarea');
+    }
+};
+
+// Controlador para eliminar una tarea
+exports.eliminarTarea = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await Tarea.findByIdAndDelete(id); // Elimina la tarea por ID
+        res.redirect('/tareas/ver'); // Redirige a la lista de tareas
+    } catch (error) {
+        console.error('Error al eliminar la tarea:', error);
+        res.status(500).send('Error al eliminar la tarea');
+    }
+};
+
+
