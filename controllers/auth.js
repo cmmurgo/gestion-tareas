@@ -1,15 +1,27 @@
-// controllers/auth.js
+const usuarioValido = { username: 'admin', password: '1234' };
 
-const login = (req, res) => {
+// Maneja la lógica del login
+exports.login = (req, res) => {
     const { username, password } = req.body;
-    const usuario = { username: 'admin', password: 'admin' }; // Simulación, reemplaza con DB
 
-    if (username === usuario.username && password === usuario.password) {
-        req.session.usuario = usuario; // Guardar usuario en sesión
-        res.redirect('/'); // Redirigir al panel si las credenciales son correctas
+    // Verificar si las credenciales son correctas
+    if (username === usuarioValido.username && password === usuarioValido.password) {
+        req.session.usuario = { username }; // Guardar usuario en sesión
+        res.redirect('/'); // Redirigir al panel
     } else {
-        res.redirect('/login?error=Credenciales incorrectas'); // Redirige al login con error
+        res.redirect('/login?error=Credenciales incorrectas'); // Mostrar error en login
     }
 };
 
-module.exports = { login };
+// Renderiza el formulario de login
+exports.renderLoginForm = (req, res) => {
+    const error = req.query.error || null; // Capturar error si existe
+    res.render('login', { error });
+};
+
+// Maneja la lógica de logout
+exports.logout = (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/login'); // Redirigir al login después de cerrar sesión
+    });
+};
