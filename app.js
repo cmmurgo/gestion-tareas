@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware para parsear JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Asegúrate de agregar esto para manejar datos del formulario
+app.use(express.urlencoded({ extended: true }));
 
 // Ruta para manejar el inicio de sesión (POST)
 app.post('/login', login);
@@ -56,10 +56,7 @@ app.get('/logout', (req, res) => {
 app.use('/tareas', tareasRoutes);
 
 // Conexión a MongoDB
-mongoose.connect('mongodb://localhost:27017/tareasDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect('mongodb://localhost/mydatabase')
 .then(() => console.log('Conectado a MongoDB'))
 .catch(err => console.error('Error al conectar a MongoDB:', err));
 
@@ -69,7 +66,7 @@ app.get('/', (req, res) => {
 });
 
 // Iniciar servidor
-const PORT = process.env.PORT || 3000; // Usa la variable de entorno si está definida
+const PORT = process.env.PORT || 3000; // Variable de entorno
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
