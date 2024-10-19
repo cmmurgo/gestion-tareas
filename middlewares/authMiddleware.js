@@ -1,7 +1,7 @@
 // Middleware para verificar si el usuario está autenticado
 exports.requireAuth = (req, res, next) => {
-    if (!req.session.usuario) { // Verificar si el usuario está en sesión
-        return res.redirect('/login'); // Redirige al login si no está autenticado
+    if (!req.session.usuario) { 
+        return res.redirect('/login'); 
     }
-    next(); // Continúa si está autenticado
+    next();
 };
