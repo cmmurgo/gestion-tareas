@@ -26,9 +26,9 @@ router.get('/', tareasController.obtenerTareas);
 router.delete('/:id', eliminarTarea)
 
 // Ruta para crear una tarea por Thunder cliente
-router.post('/', tareasController.crearTarea)
+router.post('/enviar', tareasController.crearTarea)
 
-// Ruta para crear una nueva tarea en formato Json o por formulario
+// Ruta para crear una nueva tarea o por formulario
 router.post('/', async (req, res) => {
     const { id, tarea, usuario, area, estado, prioridad, fechaVencimiento } = req.body;
 
