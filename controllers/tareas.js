@@ -61,7 +61,7 @@ exports.crearTarea = async (req, res) => {
     const nuevaTarea = new Tarea(req.body);
     try {
         const tareaGuardada = await nuevaTarea.save();
-        res.status(201).json(tareaGuardada);
+        res.status(201).json({ message: 'Tarea creada exitosamente', tarea: tareaGuardada });
     } catch (err) {
         res.status(500).json({ error: 'Error al agregar la tarea' });
     }
