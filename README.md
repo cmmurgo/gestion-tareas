@@ -51,12 +51,18 @@ Pasos para crear el proyecto:
 	3-npm init -y
 	4-npm install express
 	5-Crear la estructura de archivos
-	sistema-gestion-tareas/
-	├── controllers
-    	└── tareas.js
-    ├── models
-    	└── tarea.js
-	└── app.js	
+		sistema-gestion-tareas/
+		├── controllers
+		│   ├── tareas.js
+		│   └── auth.js
+		├── models
+		│   └── tarea.js
+		├── middlewares
+		│   └── authMiddleware.js
+		├── routes
+		│   ├── login.js
+		│   └── tareas.js
+		└── app.js
 
 Instalar Mongoose en el proyecto:
 	1- instalar Mongoose en el proyecto (npm install mongoose)
@@ -76,12 +82,15 @@ Para probar CRUD:
 	http://localhost:3000/tareas
 
 		{
-		  "id": 1,
-		  "tarea": "Mi primera tarea",
-		  "usuario": "Juan Perez",
-		  "estado": false,
-		  "prioridad": "alta"
+    		"id": 1,
+    		"tarea": "Solicitar cotización a proveedores",
+    		"usuario": "Juan Pérez",
+    		"area": "Compras",
+    		"estado": "Pendiente",
+    		"prioridad": "Alta",
+    		"fechaVencimiento": "2024-10-20T00:00:00.000Z"
 		}
+
 
 	4- Eliminar una tarea en thunder client:
 	DELETE
