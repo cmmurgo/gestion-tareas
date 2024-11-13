@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const tareasRoutes = require('./routes/tareas'); // Importar las rutas de tareas
 const path = require('path');
 const session = require('express-session');
-const loginRoutes = require('./routes/login'); 
+const usersRouter = require('./controllers/users'); // Rutas para la API de usuarios
+const loginRouter = require('./controllers/login'); // Ruta para la autenticación de usuario (inicio de sesión)
+const viewsController = require('./controllers/viewsController'); // Controlador de vistas para manejar las rutas de la interfaz de usuario
+const { errorHandler, authenticateToken } = require('./middlewares/middleware'); // Middlewares: autenticación de token y manejo de errores 
 
 const app = express();
 
@@ -23,15 +26,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Usar las rutas de login
-app.use(loginRoutes);
+// Rutas para vistas
+app.get('/', viewsController.getHome); // Ruta de inicio para la vista principal
+app.get('/login', viewsController.getLogin); // Ruta para la vista de inicio de sesión
+app.get('/register', viewsController.getRegister); // Ruta para la vista de registro de usuario
+
+// Rutas para la API (protegidas con el token)
+app.use('/api/users', usersRouter); // Rutas de la API de usuarios (sin autenticación)
+app.use('/index', authenticateToken, tareasRoutes); // Rutas de la API de publicaciones, protegidas con token
+app.use('/api/login', loginRouter); // Ruta de la API para autenticación (inicio de sesión)
+app.use(errorHandler); // Middleware global para manejo de errores
 
 
 // Montar las rutas de tareas con el prefijo /tareas
 app.use('/tareas', tareasRoutes);
 
 // Conexión a MongoDB
-mongoose.connect('mongodb://localhost/mydatabase')
+mongoose.connect('mongodb://localhost/tareasDB')
 .then(() => console.log('Conectado a MongoDB'))
 .catch(err => console.error('Error al conectar a MongoDB:', err));
 

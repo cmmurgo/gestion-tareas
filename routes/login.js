@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { login, logout, renderLoginForm } = require('../controllers/auth');
-const { requireAuth } = require('../middlewares/authMiddleware');
+const { login, logout, renderLoginForm } = require('../controllers/viewsController');
+const { requireAuth } = require('../middlewares/middleware');
 
 // Ruta para el formulario de login
 router.get('/login', renderLoginForm);
