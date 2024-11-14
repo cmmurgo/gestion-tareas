@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title Agregar Nueva Tarea
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css")
+    script(src='/js/posts.js') // Enlaza el archivo JS para gestionar el token
+  body
+    .container.mt-5
+      h1 Agregar Nueva Tarea
+      hr 
+      p      
+        
+    
+        a.btn.btn-success(href="/tareas") Ver Tareas en Formato Json 
+        br 
+        br
+        a.btn.btn-primary(href="/tareas/ver") Ver Tareas 
+        br 
+        br
+        a.btn.btn-primary(href="/tareas/nueva") Agregar Tareas 
+
+      
+      p 
+        a(href="/login") Iniciar Sesión
+         
+
+      p.mt-3
+        a(href="/") Volver al Panel de Administración
+
+        a(href="/logout") Cerrar Sesión
+          hr 
+        
+    

@@ -1,14 +1,15 @@
-// views/nueva-tarea.pug
 doctype html
 html
   head
     title Agregar Nueva Tarea
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css")
+    script(src='/js/posts.js') // Enlaza el archivo JS para gestionar el token
   body
     .container.mt-5
       h1 Agregar Nueva Tarea
 
-      form(action="/tareas/crear" method="post")
+      // Formulario para agregar una nueva tarea
+      form#postForm(action='/api/posts' method='POST' class="mt-4")
         .mb-3
           label(for="id") ID
           input(type="number" name="id" id="id" class="form-control" placeholder="ID de la tarea" required)
@@ -51,3 +52,7 @@ html
 
       p.mt-3
         a(href="/") Volver al Panel de Administración
+        
+         p      
+          a(href="/logout") Cerrar Sesión
+          hr 

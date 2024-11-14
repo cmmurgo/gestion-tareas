@@ -1,0 +1,32 @@
+// Crear un nuevo post
+postsRouter.post('/', async (request, response) => {
+    const body = request.body;
+    const user = await User.findById(body.userId); // Busca el usuario en la base de datos
+    
+    // Verifica si el usuario existe
+    if (!user) {
+      return response.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  
+    // Crear un nuevo post
+    const post = new Post({
+      title: body.title,
+      content: body.content,
+      category: body.category,
+      date: new Date(),
+      user: user._id // Usar el ID del usuario encontrado
+    });
+  
+    // Guardar el post en la base de datos
+    const savedPost = await post.save();
+    
+    // Asegurarse de que user.posts esté inicializado
+    user.posts = user.posts || [];
+    
+    // Agregar el ID del nuevo post a la lista de posts del usuario
+    user.posts = user.posts.concat(savedPost._id);
+    await user.save(); // Guardar cambios en el usuario
+  
+    // Responder con el post guardado
+    response.status(201).json(savedPost);
+  });
