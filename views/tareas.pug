@@ -6,6 +6,10 @@ html
   body
     .container.mt-5
       h1.text-center Lista de Tareas
+      
+         //- Botón para volver
+      .mt-4.text-center
+        a.btn.btn-secondary(href="/") Volver
 
       table.table.table-striped.table-bordered.mt-4
         thead
@@ -30,6 +34,4 @@ html
                 form(action=`/tareas/eliminar/${tarea._id}` method="POST" style="display:inline-block;")
                   button(type="submit" class="btn btn-danger btn-sm") Eliminar
                   
-      //- Botón para volver
-      .mt-4.text-center
-        a.btn.btn-secondary(href="/") Volver
+   
