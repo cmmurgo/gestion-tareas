@@ -6,53 +6,51 @@ html
     script(src='/js/posts.js') // Enlaza el archivo JS para gestionar el token
   body
     .container.mt-5
-      h1 Agregar Nueva Tarea
+      h1.text-center.mb-4 Agregar Nueva Tarea
 
       // Formulario para agregar una nueva tarea
-      form#postForm(action='/api/posts' method='POST' class="mt-4")
+      form#postForm(action='/api/posts' method='POST' class="mt-4 mx-auto" style="max-width: 400px;")
         .mb-3
-          label(for="id") ID
-          input(type="number" name="id" id="id" class="form-control" placeholder="ID de la tarea" required)
+          label(for="id" class="form-label") ID
+          input(type="number" name="id" id="id" class="form-control form-control-sm" placeholder="ID de la tarea" required)
 
         .mb-3
-          label(for="tarea") Tarea
-          input(type="text" name="tarea" id="tarea" class="form-control" placeholder="Nombre de la tarea" required)
+          label(for="tarea" class="form-label") Tarea
+          input(type="text" name="tarea" id="tarea" class="form-control form-control-sm" placeholder="Nombre de la tarea" required)
 
         .mb-3
-          label(for="usuario") Usuario Asignado
-          input(type="text" name="usuario" id="usuario" class="form-control" placeholder="Nombre del usuario" required)
+          label(for="usuario" class="form-label") Usuario Asignado
+          input(type="text" name="usuario" id="usuario" class="form-control form-control-sm" placeholder="Nombre del usuario" required)
 
         .mb-3
-          label(for="area") Área
-          select(name="area" id="area" class="form-control" required)
+          label(for="area" class="form-label") Área
+          select(name="area" id="area" class="form-control form-control-sm" required)
             option(value="Compras") Compras
             option(value="Ventas") Ventas
             option(value="Producción") Producción
             option(value="Inventario") Inventario
 
         .mb-3
-          label(for="estado") Estado
-          select(name="estado" id="estado" class="form-control" required)
+          label(for="estado" class="form-label") Estado
+          select(name="estado" id="estado" class="form-control form-control-sm" required)
             option(value="Pendiente") Pendiente
             option(value="En progreso") En progreso
             option(value="Completada") Completada
 
         .mb-3
-          label(for="prioridad") Prioridad
-          select(name="prioridad" id="prioridad" class="form-control" required)
+          label(for="prioridad" class="form-label") Prioridad
+          select(name="prioridad" id="prioridad" class="form-control form-control-sm" required)
             option(value="Baja") Baja
             option(value="Media") Media
             option(value="Alta") Alta
 
         .mb-3
-          label(for="fechaVencimiento") Fecha de Vencimiento
-          input(type="date" name="fechaVencimiento" id="fechaVencimiento" class="form-control" required)
+          label(for="fechaVencimiento" class="form-label") Fecha de Vencimiento
+          input(type="date" name="fechaVencimiento" id="fechaVencimiento" class="form-control form-control-sm" required)
 
-        button(type="submit" class="btn btn-primary") Guardar Tarea
+        button(type="submit" class="btn btn-primary w-100 mt-3") Guardar Tarea
 
-      p.mt-3
+      p.text-center.mt-3
         a(href="/") Volver al Panel de Administración
-        
-         p      
-          a(href="/logout") Cerrar Sesión
-          hr 
+      p.text-center
+        a(href="/logout") Cerrar Sesión
