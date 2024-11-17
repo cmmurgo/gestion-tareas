@@ -63,7 +63,7 @@ app.use(errorHandler); // Middleware global para manejo de errores
 app.use('/tareas', tareasRoutes);
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 8000; // Configura el puerto de escucha (predeterminado: 8000)
+const PORT = process.env.PORT || 3000; // Configura el puerto de escucha (predeterminado: 3000)
 app.listen(PORT, () => {
     console.log(`Servidor ejecutándose en http://localhost:${PORT}`); // Mensaje de inicio del servidor
 });
