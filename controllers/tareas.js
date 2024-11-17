@@ -1,4 +1,4 @@
-const Tarea = require('../models/Tarea');
+const Tarea = require('../models/post');
 
 // Controlador para obtener todas las tareas
 exports.obtenerTareas = async (req, res) => {

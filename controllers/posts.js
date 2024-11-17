@@ -126,10 +126,16 @@ postsRouter.delete('/:id', async (request, response) => {
 // Ruta para actualizar un post por su ID
 postsRouter.put('/:id', async (request, response, next) => {
   const body = request.body; // Obtenemos los datos del cuerpo de la solicitud
-  const post = {
-    title: body.title,
-    content: body.content,
-    category: body.category
+  const post = { 
+    id: body.id,
+    tarea: body.tarea,
+    usuario: body.usuario,
+    area: body.area,
+    estado: body.estado,
+    prioridad: body.prioridad,
+    //user: user._id // Asociamos el post al usuario
+    fechaVencimiento: new Date(),
+    
   };
 
   try {
