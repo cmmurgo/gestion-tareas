@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Tarea = require('../models/Tarea');
+const Tarea = require('../models/tarea');
 const {
     obtenerTareas,
     verTareas,

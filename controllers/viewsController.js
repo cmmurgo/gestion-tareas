@@ -25,7 +25,7 @@ exports.getPosts = async (req, res) => {
     // Obtiene todos los documentos de la colección "posts" en la base de datos
     const posts = await Post.find({});
     // Renderiza la vista 'posts' y pasa el arreglo de posts como datos para mostrar en la vista
-    res.render('posts', { posts });
+    res.render('menu', { posts });
   } catch (error) {
     // En caso de error al obtener los posts, responde con un código de estado 500 y un mensaje de error
     res.status(500).send({ error: 'Error al obtener los posts' });
