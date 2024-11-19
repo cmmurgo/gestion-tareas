@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si no hay token (lo que significa que el usuario no está autenticado), muestra una alerta.
     if (!token) {
       // Muestra un mensaje de alerta para indicar que el usuario debe iniciar sesión.
-      alert("Por favor, inicia sesión para crear un post.");
+      alert("Por favor, inicia sesión para crear una tarea.");
       
       // Redirige al usuario a la página de login si no se encuentra un token en el almacenamiento local.
       window.location.href = '/login'; // Redirige al inicio de sesión si no hay token
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
   
-    // Obtiene el valor de los campos del formulario: título, contenido y categoría del post.
     const id = document.getElementById('id').value;
     const tarea = document.getElementById('tarea').value;
     const usuario = document.getElementById('usuario').value;
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prioridad = document.getElementById('prioridad').value;
     const fechaVencimiento = document.getElementById('fechaVencimiento').value;
   
-    // Realiza una solicitud HTTP al servidor para crear un nuevo post con los datos proporcionados en el formulario.
+    // Realiza una solicitud HTTP al servidor para crear una nueva tarea con los datos proporcionados en el formulario.
     const response = await fetch('/api/posts', {
       // El método de la solicitud será 'POST' para crear un nuevo recurso (el post).
       method: 'POST',
@@ -58,11 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Si la respuesta es exitosa (código de estado 200-299), procesamos la respuesta.
     if (response.ok) {
-      // Se convierte la respuesta de la solicitud en un objeto JSON (que debe contener el post creado).
-      const post = await response.json();
+      // Se convierte la respuesta de la solicitud en un objeto JSON (que debe contener la tarea creada).
+      const tarea = await response.json();
       
-      // Muestra por consola el post creado para verificación o depuración.
-      console.log('Post creado:', post);
+      // Muestra por consola la tarea creada para verificación o depuración.
+      console.log('Post creado:', tarea);
       // Redirigir al usuario a la página de posts
       window.location.href = '/posts'; // Redirige a la página de posts
     } else {
