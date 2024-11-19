@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fechaVencimiento = document.getElementById('fechaVencimiento').value;
   
     // Realiza una solicitud HTTP al servidor para crear una nueva tarea con los datos proporcionados en el formulario.
-    const response = await fetch('/api/posts', {
+    const response = await fetch('/api/menu', {
       // El método de la solicitud será 'POST' para crear un nuevo recurso (el post).
       method: 'POST',
       
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Muestra por consola la tarea creada para verificación o depuración.
       console.log('Post creado:', tarea);
       // Redirigir al usuario a la página de posts
-      window.location.href = '/posts'; // Redirige a la página de posts
+      window.location.href = '/menu'; // Redirige a la página de posts
     } else {
       // Si la respuesta no fue exitosa (es decir, hubo algún error), obtiene el error de la respuesta.
       const errorData = await response.json();

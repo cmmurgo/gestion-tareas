@@ -51,11 +51,11 @@ app.set('view engine', 'pug'); // Configura Pug como el motor de plantillas para
 app.get('/', viewsController.getHome); // Ruta de inicio para la vista principal
 app.get('/login', viewsController.getLogin); // Ruta para la vista de inicio de sesión
 app.get('/register', viewsController.getRegister); // Ruta para la vista de registro de usuario
-app.get('/posts', viewsController.getPosts); // Ruta para la vista de publicaciones (sin autenticación)
+app.get('/menu', viewsController.getPosts); // Ruta para la vista de publicaciones (sin autenticación)
 
 // Rutas para la API (protegidas con el token)
 app.use('/api/users', usersRouter); // Rutas de la API de usuarios (sin autenticación)
-app.use('/api/posts', authenticateToken, tareaTokenRouter.crearTareaConToken); // Rutas de la API de publicaciones, protegidas con token
+app.use('/api/menu', authenticateToken, tareaTokenRouter.crearTareaConToken); // Rutas de la API de publicaciones, protegidas con token
 app.use('/api/login', loginRouter); // Ruta de la API para autenticación (inicio de sesión)
 app.use(errorHandler); // Middleware global para manejo de errores
 
