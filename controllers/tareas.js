@@ -1,5 +1,9 @@
 const Tarea = require('../models/tarea');
 
+// Importamos las bibliotecas necesarias para la verificación de tokens y la base de datos
+const jwt = require('jsonwebtoken');
+const User = require('../models/user'); // Modelo de User
+
 // Controlador para obtener todas las tareas
 exports.obtenerTareas = async (req, res) => {
     try {
@@ -169,3 +173,78 @@ exports.eliminarTareaForm = async (req, res) => {
         res.status(500).send('Error al eliminar la tarea');
     }
 };
+
+// Función para obtener el token de autorización desde el encabezado de la solicitud
+const getTokenFrom = (request) => {
+    const authorization = request.get('authorization'); // Obtenemos el encabezado 'Authorization'
+    console.log('Authorization Header:', authorization); // Imprimimos el encabezado para depuración
+    
+    // Si el encabezado existe y comienza con 'Bearer ', extraemos el token
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+      return authorization.substring(7); // Devuelve el token quitando 'Bearer ' al principio
+    }
+    return null; // Si no se encuentra el token, retornamos null
+  };
+  
+
+// Ruta para crear un nuevo post
+exports.crearTareaConToken = async (request, response) => {
+    const body = request.body; // Obtenemos los datos del cuerpo de la solicitud
+    const token = getTokenFrom(request); // Obtenemos el token de la solicitud
+  
+    try {
+      // Si no existe el token, respondemos con un error 401 (No autorizado)
+      if (!token) {
+        return response.status(401).json({ error: 'Token faltante' });
+      }
+  
+      // Intentamos verificar el token usando la clave secreta del entorno
+      const decodedToken = jwt.verify(token, process.env.SECRET);
+      
+      // Si el token no contiene un ID de usuario, respondemos con un error 401 (Token inválido)
+      if (!decodedToken.id) {
+        return response.status(401).json({ error: 'Token inválido' });
+      }
+  
+      // Intentamos encontrar al usuario en la base de datos usando el ID decodificado del token
+      const user = await User.findById(decodedToken.id);
+      
+      // Si el usuario no existe, respondemos con un error 404 (Usuario no encontrado)
+      if (!user) {
+        return response.status(404).json({ error: 'Usuario no encontrado' });
+      }
+  
+      // Creamos un nuevo post con los datos obtenidos del cuerpo de la solicitud
+      const post = new Tarea({
+        id: body.id,
+        tarea: body.tarea,
+        usuario: body.usuario,
+        area: body.area,
+        estado: body.estado,
+        prioridad: body.prioridad,
+        //user: user._id // Asociamos el post al usuario
+        fechaVencimiento: new Date(),
+     
+      });
+  
+      // Guardamos el post en la base de datos
+      const savedPost = await post.save();
+      
+      // Añadimos el ID del nuevo post al arreglo de posts del usuario
+      user.posts = user.posts.concat(savedPost._id);
+      await user.save(); // Guardamos al usuario con el nuevo post relacionado
+  
+      // Respondemos con el post recién creado y un código de estado 201 (Creado)
+      response.status(201).json(savedPost);
+    } catch (error) {
+      console.error('Error al crear el post:', error); // Para depuración
+      // Si el error es relacionado con el token, respondemos con un error 401 (Token inválido)
+      if (error.name === 'JsonWebTokenError') {
+        return response.status(401).json({ error: 'Token inválido' });
+      }
+      // Si ocurrió otro error, respondemos con un error 500 (Problema interno del servidor)
+      response.status(500).json({ error: 'Error al crear el post' });
+    }
+  };
+
+  
