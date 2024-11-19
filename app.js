@@ -9,7 +9,7 @@ const session = require('express-session');
 // Importar controladores y middlewares
 const viewsController = require('./controllers/viewsController'); // Controlador de vistas para manejar las rutas de la interfaz de usuario
 const usersRouter = require('./controllers/users'); // Rutas para la API de usuarios
-const postsRouter = require('./controllers/posts'); // Rutas para la API de publicaciones
+const tareaTokenRouter = require('./controllers/tareas'); // Rutas para la API de publicaciones
 const loginRouter = require('./controllers/login'); // Ruta para la autenticación de usuario (inicio de sesión)
 const { errorHandler, authenticateToken } = require('./middlewares/middleware'); // Middlewares: autenticación de token y manejo de errores
 
@@ -55,7 +55,7 @@ app.get('/posts', viewsController.getPosts); // Ruta para la vista de publicacio
 
 // Rutas para la API (protegidas con el token)
 app.use('/api/users', usersRouter); // Rutas de la API de usuarios (sin autenticación)
-app.use('/api/posts', authenticateToken, postsRouter); // Rutas de la API de publicaciones, protegidas con token
+app.use('/api/posts', authenticateToken, tareaTokenRouter.crearTareaConToken); // Rutas de la API de publicaciones, protegidas con token
 app.use('/api/login', loginRouter); // Ruta de la API para autenticación (inicio de sesión)
 app.use(errorHandler); // Middleware global para manejo de errores
 
