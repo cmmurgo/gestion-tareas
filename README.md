@@ -25,10 +25,10 @@ Puedes interactuar con la API mediante herramientas como [Postman](https://www.p
 ### Endpoints disponibles:
 
 - `GET /tareas`: Obtiene todas las tareas.
-- `GET /tareas/:id`: Obtiene una tarea específica por su ID.
+- `GET /tareas/id`: Obtiene una tarea específica por su ID.
 - `POST /tareas`: Crea una nueva tarea.
-- `PUT /tareas/:id`: Actualiza una tarea existente.
-- `DELETE /tareas/:id`: Elimina una tarea por su ID.
+- `PUT /tareas/id`: Actualiza una tarea existente.
+- `DELETE /tareas/id`: Elimina una tarea por su ID.
 - `FILTRAR /tareas/filtrar`: Filtra una tarea por area, estado, prioridad, usuario. 
 
 ## Dependencias
