@@ -21,7 +21,11 @@ const tareaSchema = new mongoose.Schema({
         required: true 
     },
     fechaCreacion: { type: Date, default: Date.now },
-    fechaVencimiento: { type: Date, required: true }
+    fechaVencimiento: { type: Date, required: true },
+    user: {
+        type: mongoose.Schema.Types.ObjectId, // Tipo de dato ObjectId que referencia a otro documento
+        ref: 'User' // Referencia al modelo 'User'
+    }
 });
 
 // Exportar el modelo 'Tarea' basado en el esquema

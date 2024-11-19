@@ -3,7 +3,7 @@ const postsRouter = require('express').Router();
 
 // Importamos las bibliotecas necesarias para la verificación de tokens y la base de datos
 const jwt = require('jsonwebtoken');
-const Post = require('../models/post'); // Modelo de Post
+const Post = require('../models/tarea'); // Modelo de Post
 const User = require('../models/user'); // Modelo de User
 
 // Ruta para obtener todos los posts

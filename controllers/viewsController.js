@@ -1,5 +1,4 @@
-// Importa el modelo de datos "Post" desde la carpeta de modelos para interactuar con la base de datos
-const Post = require('../models/post');
+const Post = require('../models/tarea');
 
 // Controlador para renderizar la página de inicio
 exports.getHome = (req, res) => {
