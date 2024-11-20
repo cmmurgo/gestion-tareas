@@ -14,7 +14,7 @@ async function login() {
     if (data.token) {
       localStorage.setItem('token', data.token); // Almacena el token
       console.log('Token almacenado:', localStorage.getItem('token'));
-      window.location.href = '/menu'; // Redirige a la página de posts
+      window.location.href = '/menu'; 
     } else {
       alert("Error: Token no recibido.");
     }

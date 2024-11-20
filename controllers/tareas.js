@@ -236,9 +236,7 @@ exports.crearTareaConToken = async (request, response) => {
       });
   
       const savednuevaTarea = await nuevaTarea.save();
-      
-      // Añadimos el ID de la nueva tarea al arreglo de posts del usuario
-      user.posts = user.posts.concat(savednuevaTarea._id);
+  
       await user.save(); 
   
       // Respondemos con el post recién creado y un código de estado 201 (Creado)

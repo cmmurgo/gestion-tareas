@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const tareaSchema = new mongoose.Schema({
     id: { type: Number, required: true },
     tarea: { type: String, required: true },
-    usuario: { type: String, required: true },  // Usuario asignado
+    usuario: { type: String, required: true },
     area: { 
         type: String, 
         enum: ['Compras', 'Ventas', 'Producción', 'Inventario'], 
@@ -23,10 +23,9 @@ const tareaSchema = new mongoose.Schema({
     fechaCreacion: { type: Date, default: Date.now },
     fechaVencimiento: { type: Date, required: true },
     user: {
-        type: mongoose.Schema.Types.ObjectId, // Tipo de dato ObjectId que referencia a otro documento
-        ref: 'User' // Referencia al modelo 'User'
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User' 
     }
 });
 
-// Exportar el modelo 'Tarea' basado en el esquema
 module.exports = mongoose.model('Tarea', tareaSchema);
