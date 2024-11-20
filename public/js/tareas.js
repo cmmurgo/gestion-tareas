@@ -43,8 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Muestra un mensaje de alerta para indicar que el usuario debe iniciar sesión.
       alert("Por favor, inicia sesión para crear una tarea.");
       
-      // Redirige al usuario a la página de login si no se encuentra un token en el almacenamiento local.
-      window.location.href = '/login'; // Redirige al inicio de sesión si no hay token
+      window.location.href = '/login'; 
       
       // Sale de la función, evitando que el formulario sea enviado sin token.
       return;
@@ -65,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Los encabezados de la solicitud, donde indicamos el tipo de contenido (JSON) y la autorización con el token.
       headers: {
-        'Content-Type': 'application/json', // Especifica que el cuerpo de la solicitud es JSON.
+        'Content-Type': 'application/json', 
         'Authorization': `Bearer ${token}` // Añade el token de autorización en el encabezado para autenticar la solicitud.
       },
       
@@ -75,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Si la respuesta es exitosa (código de estado 200-299), procesamos la respuesta.
     if (response.ok) {
-      // Se convierte la respuesta de la solicitud en un objeto JSON (que debe contener la tarea creada).
+
       const tarea = await response.json();      
     
       console.log('Post creado:', tarea);

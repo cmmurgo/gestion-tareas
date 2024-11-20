@@ -25,9 +25,6 @@ usersRouter.post('/', async (request, response) => {
 
 // Ruta para obtener todos los usuarios
 usersRouter.get('/', async (request, response) => {
-  // Obtenemos todos los usuarios de la base de datos, y también usamos .populate('tareas') 
-  // para incluir los tareas relacionados de cada usuario (si existen)
-  const users = await User.find({}).populate('posts');
   
   // Respondemos con la lista de usuarios en formato JSON
   response.json(users);
