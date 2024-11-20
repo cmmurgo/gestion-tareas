@@ -11,13 +11,17 @@ const {
     crearTareaForm,
     actualizarTareaForm,
     editarTareaForm,
-    eliminarTareaForm
+    eliminarTareaForm,
+    obtenerUltimoId
 } = require('../controllers/tareas');
 
 // Ruta para renderizar la vista de agregar nueva tarea por formulario
 router.get('/nueva', (req, res) => {
     res.render('nueva-tarea');
 });
+
+// Ruta para obtener el último ID
+router.get('/ultimo-id', obtenerUltimoId);
 
 // Ruta para obtener tareas con filtros en formato Json
 router.get('/filtrar', obtenerTareasFiltros);

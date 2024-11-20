@@ -14,6 +14,7 @@ html
       table.table.table-striped.table-bordered.mt-4
         thead
           tr
+            th Id
             th Área
             th Tarea
             th Responsable
@@ -22,6 +23,7 @@ html
         tbody
           each tarea in tareas
             tr
+              td= tarea.id
               td= tarea.area
               td= tarea.tarea
               td= tarea.usuario

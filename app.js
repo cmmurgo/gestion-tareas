@@ -62,6 +62,9 @@ app.use(errorHandler); // Middleware global para manejo de errores
 // Montar las rutas de tareas con el prefijo /tareas
 app.use('/tareas', tareasRoutes);
 
+// Ruta específica para obtener el último ID
+app.use('/api', tareasRoutes);
+
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000; // Configura el puerto de escucha (predeterminado: 3000)
 app.listen(PORT, () => {

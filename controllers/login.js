@@ -1,11 +1,6 @@
-const jwt = require('jsonwebtoken'); // Importa la librería 'jsonwebtoken' para manejar la creación y verificación de JWT (JSON Web Tokens)
-const bcrypt = require('bcrypt');// Importa la librería 'bcrypt' para manejar el cifrado de contraseñas y compararlas de manera segura
-
-
-// Crea un router de Express para manejar las rutas relacionadas con el login
+const jwt = require('jsonwebtoken'); 
+const bcrypt = require('bcrypt');
 const loginRouter = require('express').Router();
-
-// Importa el modelo de 'User' que representa a los usuarios en la base de datos
 const User = require('../models/user');
 
 // Define la ruta POST para la autenticación de login
@@ -17,8 +12,6 @@ loginRouter.post('/', async (request, response) => {
   // Busca en la base de datos un usuario con el nombre de usuario proporcionado
   const user = await User.findOne({ username: body.username });
   
-  // Verifica si la contraseña proporcionada por el usuario coincide con la almacenada en la base de datos
-  // 'bcrypt.compare()' compara la contraseña proporcionada con el hash almacenado
   const passwordCorrect =
     user === null  // Si el usuario no existe en la base de datos, la contraseña es incorrecta
       ? false
@@ -33,8 +26,8 @@ loginRouter.post('/', async (request, response) => {
 
   // Si las credenciales son correctas, se prepara el objeto que se usará para generar el token
   const userForToken = {
-    username: user.username, // Incluye el nombre de usuario en el payload del token
-    id: user._id // Incluye el ID del usuario en el payload del token
+    username: user.username, 
+    id: user._id 
   };
 
   // Genera un token JWT utilizando la clave secreta almacenada en las variables de entorno
@@ -42,10 +35,9 @@ loginRouter.post('/', async (request, response) => {
 
   // Envía una respuesta con el token generado, junto con el nombre de usuario y el nombre completo del usuario
   response
-    .status(200) // Responde con un código de estado 200 (OK) si el login es exitoso
-    .send({ token, username: user.username, name: user.name }); // Envía el token y la información del usuario
+    .status(200) 
+    .send({ token, username: user.username, name: user.name }); 
 
 });
 
-// Exporta el router para ser usado en otras partes de la aplicación (como en el archivo principal de la app)
 module.exports = loginRouter;
