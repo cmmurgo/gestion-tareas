@@ -6,13 +6,31 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Si el formulario existe en la página (es decir, el elemento no es null), agrega un escuchador para el evento 'submit'.
     if (postForm) {
-      // Cuando el formulario sea enviado, ejecutará la función 'createPost'.
-      postForm.addEventListener('submit', createPost);
+      // Cuando el formulario sea enviado, ejecutará la función 'createTarea'.
+      postForm.addEventListener('submit', createTarea);
     }
   });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const obtenerUltimoId = async () => {
+        try {
+            const response = await fetch('/api/ultimo-id');
+            if (!response.ok) throw new Error('Error al obtener el último ID');
+            const data = await response.json();
+            const idInput = document.getElementById('id');
+            if (idInput) {      
+                idInput.value = data.ultimoId; 
+            } 
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    obtenerUltimoId(); 
+});
   
-  // Función asincrónica que maneja la creación del post al enviar el formulario.
-  async function createPost(event) {
+
+  async function createTarea(event) {
     
     // Previene el comportamiento predeterminado del formulario, que es recargar la página al enviarse.
     event.preventDefault();
@@ -58,18 +76,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si la respuesta es exitosa (código de estado 200-299), procesamos la respuesta.
     if (response.ok) {
       // Se convierte la respuesta de la solicitud en un objeto JSON (que debe contener la tarea creada).
-      const tarea = await response.json();
-      
-      // Muestra por consola la tarea creada para verificación o depuración.
+      const tarea = await response.json();      
+    
       console.log('Post creado:', tarea);
-      // Redirigir al usuario a la página de posts
-      window.location.href = '/menu'; // Redirige a la página de posts
+      window.location.href = '/menu'; 
     } else {
       // Si la respuesta no fue exitosa (es decir, hubo algún error), obtiene el error de la respuesta.
       const errorData = await response.json();
       
       // Muestra el error en la consola para depuración.
-      console.error('Error al crear el post:', errorData);
+      console.error('Error al crear la tarea:', errorData);
     }
   }
+
+
+
   

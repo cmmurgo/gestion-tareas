@@ -1,8 +1,6 @@
 const Tarea = require('../models/tarea');
-
-// Importamos las bibliotecas necesarias para la verificación de tokens y la base de datos
 const jwt = require('jsonwebtoken');
-const User = require('../models/user'); // Modelo de User
+const User = require('../models/user'); 
 
 // Controlador para obtener todas las tareas
 exports.obtenerTareas = async (req, res) => {
@@ -17,8 +15,8 @@ exports.obtenerTareas = async (req, res) => {
 // Controlador para obtener todas las tareas
 exports.verTareas = async (req, res) => {
     try {
-        const tareas = await Tarea.find(); // Obtener todas las tareas de la BD
-        res.render('tareas', { tareas });  // Renderiza la vista y pasa las tareas
+        const tareas = await Tarea.find(); 
+        res.render('tareas', { tareas });  
     } catch (error) {
         console.error('Error al obtener las tareas:', error);
         res.status(500).send('Error al obtener las tareas');
@@ -85,8 +83,8 @@ exports.crearTareaForm = async (req, res) => {
             fechaVencimiento,
         });
 
-        await nuevaTarea.save(); // Guarda la tarea en la base de datos
-        res.redirect('/'); // Redirige al panel principal
+        await nuevaTarea.save(); 
+        res.redirect('/'); 
     } catch (error) {
         console.error('Error al guardar la tarea:', error);
         res.status(500).send('Hubo un error al crear la tarea.');
@@ -114,11 +112,11 @@ exports.actualizarTarea = async (req, res) => {
 exports.editarTareaForm = async (req, res) => {
     try {
         const { id } = req.params;
-        const tarea = await Tarea.findById(id); // Obtiene la tarea por ID
+        const tarea = await Tarea.findById(id); 
         if (!tarea) {
             return res.status(404).send('Tarea no encontrada');
         }
-        res.render('editarTarea', { tarea }); // Renderiza la vista de edición
+        res.render('editarTarea', { tarea }); 
     } catch (error) {
         console.error('Error al obtener la tarea para editar:', error);
         res.status(500).send('Error al cargar la tarea para editar');
@@ -151,46 +149,57 @@ exports.actualizarTareaForm = async (req, res) => {
 // Controlador para eliminar una tarea por Thunder Client
 exports.eliminarTarea = async (req, res) => {
     try {
-        const tareaEliminada = await Tarea.findOneAndDelete({ id: req.params.id });  // Busca por el campo `id` numérico
+        const tareaEliminada = await Tarea.findOneAndDelete({ id: req.params.id });  
         if (!tareaEliminada) {
             return res.status(404).json({ error: 'Tarea no encontrada' });
         }
-        res.status(204).send();  // No retorna contenido después de eliminar
+        res.status(204).send(); 
     } catch (err) {
         res.status(500).json({ error: 'Error al eliminar la tarea' });
     }
 };
 
-
 // Controlador para eliminar una tarea por formulario
 exports.eliminarTareaForm = async (req, res) => {
     try {
         const { id } = req.params;
-        await Tarea.findByIdAndDelete(id); // Elimina la tarea por ID
-        res.redirect('/tareas/ver'); // Redirige a la lista de tareas
+        await Tarea.findByIdAndDelete(id); 
+        res.redirect('/tareas/ver'); 
     } catch (error) {
         console.error('Error al eliminar la tarea:', error);
         res.status(500).send('Error al eliminar la tarea');
     }
 };
 
+// Controlador para obtener el último ID
+exports.obtenerUltimoId = async (req, res) => {
+    try {
+        const ultimaTarea = await Tarea.findOne().sort({ id: -1 }); // Buscar la tarea con el ID más alto
+        const ultimoId = ultimaTarea ? ultimaTarea.id : 0; // Si no hay tareas, inicia en 0
+        res.json({ ultimoId: ultimoId + 1 }); // Retornar el siguiente ID
+    } catch (err) {
+        console.error('Error al obtener el último ID:', err);
+        res.status(500).json({ error: 'Error al obtener el último ID' });
+    }
+};
+
 // Función para obtener el token de autorización desde el encabezado de la solicitud
 const getTokenFrom = (request) => {
-    const authorization = request.get('authorization'); // Obtenemos el encabezado 'Authorization'
-    console.log('Authorization Header:', authorization); // Imprimimos el encabezado para depuración
+    const authorization = request.get('authorization'); 
+    console.log('Authorization Header:', authorization); 
     
     // Si el encabezado existe y comienza con 'Bearer ', extraemos el token
     if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
       return authorization.substring(7); // Devuelve el token quitando 'Bearer ' al principio
     }
-    return null; // Si no se encuentra el token, retornamos null
+    return null; 
   };
   
 
-// Ruta para crear un nuevo post
+// Ruta para crear una nueva tarea con token
 exports.crearTareaConToken = async (request, response) => {
-    const body = request.body; // Obtenemos los datos del cuerpo de la solicitud
-    const token = getTokenFrom(request); // Obtenemos el token de la solicitud
+    const body = request.body; 
+    const token = getTokenFrom(request); 
   
     try {
       // Si no existe el token, respondemos con un error 401 (No autorizado)
@@ -214,36 +223,34 @@ exports.crearTareaConToken = async (request, response) => {
         return response.status(404).json({ error: 'Usuario no encontrado' });
       }
   
-      // Creamos un nuevo post con los datos obtenidos del cuerpo de la solicitud
-      const post = new Tarea({
+      // Creamos una nueva tarea con los datos obtenidos del cuerpo de la solicitud
+      const nuevaTarea = new Tarea({
         id: body.id,
         tarea: body.tarea,
         usuario: body.usuario,
         area: body.area,
         estado: body.estado,
         prioridad: body.prioridad,
-        //user: user._id // Asociamos el post al usuario
         fechaVencimiento: new Date(),
      
       });
   
-      // Guardamos el post en la base de datos
-      const savedPost = await post.save();
+      const savednuevaTarea = await nuevaTarea.save();
       
-      // Añadimos el ID del nuevo post al arreglo de posts del usuario
-      user.posts = user.posts.concat(savedPost._id);
-      await user.save(); // Guardamos al usuario con el nuevo post relacionado
+      // Añadimos el ID de la nueva tarea al arreglo de posts del usuario
+      user.posts = user.posts.concat(savednuevaTarea._id);
+      await user.save(); 
   
       // Respondemos con el post recién creado y un código de estado 201 (Creado)
-      response.status(201).json(savedPost);
+      response.status(201).json(savednuevaTarea);
     } catch (error) {
-      console.error('Error al crear el post:', error); // Para depuración
+      console.error('Error al crear nuevaTarea:', error); 
       // Si el error es relacionado con el token, respondemos con un error 401 (Token inválido)
       if (error.name === 'JsonWebTokenError') {
         return response.status(401).json({ error: 'Token inválido' });
       }
       // Si ocurrió otro error, respondemos con un error 500 (Problema interno del servidor)
-      response.status(500).json({ error: 'Error al crear el post' });
+      response.status(500).json({ error: 'Error al crear la nuevaTarea' });
     }
   };
 
