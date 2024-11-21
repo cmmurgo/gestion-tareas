@@ -13,10 +13,9 @@ usersRouter.post('/', async (request, response) => {
   const user = new User({
     username: body.username, 
     name: body.name, 
-    passwordHash // Asignamos la contraseña encriptada
+    passwordHash 
   });
   
-  // Guardamos el usuario en la base de datos
   const savedUser = await user.save();
   
   // Respondemos con el usuario guardado en formato JSON

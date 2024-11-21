@@ -22,10 +22,7 @@ const tareaSchema = new mongoose.Schema({
     },
     fechaCreacion: { type: Date, default: Date.now },
     fechaVencimiento: { type: Date, required: true },
-    user: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User' 
-    }
+
 });
 
 module.exports = mongoose.model('Tarea', tareaSchema);
