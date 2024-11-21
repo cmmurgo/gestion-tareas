@@ -53,7 +53,7 @@ app.get('/menu', viewsController.getMenu);
 
 // Rutas para la API (protegidas con el token)
 app.use('/api/users', usersRouter); // Rutas de la API de usuarios (sin autenticación)
-app.use('/api/menu', authenticateToken, tareaTokenRouter.crearTareaConToken); // Rutas de la API de publicaciones, protegidas con token
+app.use('/api/menu', authenticateToken, tareaTokenRouter.crearTareaConToken); // Rutas de la API de tareas, protegidas con token
 app.use('/api/login', loginRouter); // Ruta de la API para autenticación (inicio de sesión)
 app.use(errorHandler); // Middleware global para manejo de errores
 
