@@ -3,20 +3,25 @@ html
   head
     title MENU PRINCIPAL
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css")
-    script(src='/js/tareas.js') // Enlaza el archivo JS para gestionar el token
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const username = localStorage.getItem('username') || 'Usuario'; // Recuperar el nombre de usuario
+        document.getElementById('username-display').innerText = `Bienvenido, ${username}`;
+      });
   body
     .container.mt-5
       h1.text-center MENU PRINCIPAL
       hr
+      h3.text-center#username-display Bienvenido, Usuario
+      hr
       p.text-center
-        a.btn.btn-success(href="/tareas") Ver Tareas en Formato Json
+        a.btn.btn-success(href="/tareas") Ver Tareas en Formato JSON
         br
         br
         a.btn.btn-primary(href="/tareas/ver") Ver Tareas
         br
         br
         a.btn.btn-primary(href="/tareas/nueva") Agregar Tareas
-
         br
         br
         a.btn.btn-danger(href="/logout") Cerrar Sesión
