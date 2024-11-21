@@ -15,7 +15,7 @@ exports.getRegister = (req, res) => {
   res.render('register');
 };
 
-// Controlador para renderizar la página de tareas (lista de publicaciones)
+// Controlador para renderizar la página Menu
 exports.getMenu = async (req, res) => {
   try {
     const menu = await Post.find({});
