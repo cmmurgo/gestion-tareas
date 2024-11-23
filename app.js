@@ -43,6 +43,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/tareasDB', {
 // Middleware para analizar datos en formato URL-encoded
 app.use(express.urlencoded({ extended: false })); 
 app.use(express.json());
+//vercel
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug'); 
 
 // Rutas para vistas
