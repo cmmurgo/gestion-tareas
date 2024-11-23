@@ -64,7 +64,8 @@ app.use('/tareas', tareasRoutes);
 app.use('/api', tareasRoutes);
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3000; // Vercel asigna el puerto en process.env.PORT
 app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${PORT}`); 
+    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
+
