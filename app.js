@@ -63,9 +63,14 @@ app.use('/tareas', tareasRoutes);
 // Ruta específica para obtener el último ID
 app.use('/api', tareasRoutes);
 
-// Iniciar el servidor
-const PORT = process.env.PORT || 3000; // Vercel asigna el puerto en process.env.PORT
-app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
-});
+// Iniciar el servidor - verifica si el archivo app.js se está ejecutando directamente -node app.js o npm run dev
+// o si está siendo usado como módulo (como lo hace Vercel). 
 
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+    });
+} else {
+    module.exports = app; // Exporta la app si se usa en un entorno como Vercel
+}
