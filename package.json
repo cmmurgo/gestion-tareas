@@ -4,6 +4,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "vercel-start": "node app.js",
+    "deploy": "vercel --prod",
     "dev": "nodemon app.js"
   },
   "keywords": [
