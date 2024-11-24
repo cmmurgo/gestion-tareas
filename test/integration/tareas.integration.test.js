@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const request = require('supertest');
-const path = require('path'); 
-const app = require(path.join(__dirname, '..', '..', 'app')); 
+const path = require('path');
+const app = require(path.join(__dirname, '..', '..', 'app'));
 const { connectDB, closeDB } = require(path.join(__dirname, '..', '..', 'config', 'database'));
 const Tarea = require(path.join(__dirname, '..', '..', 'models', 'tarea'));
-const tareasData = require(path.join(__dirname, '..', 'data', 'testData')); 
+const tareasData = require(path.join(__dirname, '..', 'data', 'testData'));
 const { Builder } = require(path.join(__dirname, '..', 'builders', 'tareaBuilder'));
 
 beforeAll(async () => {
@@ -12,7 +12,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-    await Tarea.create(tareasData.slice(0, 5)); 
+    await Tarea.create(tareasData.slice(0, 5));
 });
 
 afterEach(async () => {
@@ -24,18 +24,18 @@ afterAll(async () => {
 });
 
 describe('API de Tareas', () => {
-    
+
     test('GET | obtener todas las tareas', async () => {
         const res = await request(app).get('/tareas').expect(200);
-        
+
         expect(res.body.length).toBe(5);
-        
+
         const tareasOrdenadas = res.body.sort((a, b) => a.id - b.id); // Ordenar tareas por ID
         expect(tareasOrdenadas[0].tarea).toBe('Tarea de prueba 1');
     });
-    
+
     test('POST | crear una nueva tarea', async () => {
-        const nuevaTarea = tareasData[5]; 
+        const nuevaTarea = tareasData[4];
 
         const res = await request(app)
             .post('/tareas')
@@ -44,7 +44,7 @@ describe('API de Tareas', () => {
             .expect(201);
 
         const { _id, __v, fechaCreacion, ...tareaGuardada } = res.body;
-        tareaGuardada.fechaVencimiento = new Date(tareaGuardada.fechaVencimiento); 
+        tareaGuardada.fechaVencimiento = new Date(tareaGuardada.fechaVencimiento);
 
         expect(tareaGuardada).toEqual(nuevaTarea);
 
@@ -67,21 +67,21 @@ describe('API de Tareas', () => {
 
     test('PUT | actualizar una tarea existente', async () => {
         const tarea = await Tarea.findOne({ id: 1 });
-        const actualizacion = tareasData[5]; // Usar la sexta tarea para actualizar
-    
+        const actualizacion = tareasData[5];
+
         const res = await request(app)
             .put(`/tareas/${tarea.id}`)
             .send(actualizacion)
             .set('Accept', 'application/json')
             .expect(200);
-    
-        const { _id, __v, fechaCreacion, id, ...tareaActualizada } = res.body; // Excluir _id, __v y id del objeto comparado
+
+        const { _id, __v, fechaCreacion, id, ...tareaActualizada } = res.body;
         tareaActualizada.fechaVencimiento = new Date(tareaActualizada.fechaVencimiento);
-    
-        const { id: actualizacionId, ...expectedActualizacion } = actualizacion; // Excluir ID de la comparación
+
+        const { id: actualizacionId, ...expectedActualizacion } = actualizacion;
         expect(tareaActualizada).toEqual(expectedActualizacion);
     });
-    
+
 
     test('DELETE | eliminar una tarea por ID', async () => {
         const tarea = await Tarea.findOne({ id: 1 });
@@ -102,7 +102,7 @@ describe('API de Tareas', () => {
     });
 
     test('POST | crear una nueva tarea con token', async () => {
-        const nuevaTarea = tareasData[5]; 
+        const nuevaTarea = tareasData[3];
 
         const token = 'tu_token_de_autenticacion_aqui'; // Reemplaza con el token real
 
