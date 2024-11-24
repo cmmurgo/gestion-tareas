@@ -52,17 +52,25 @@ Pasos para crear el proyecto:
 	4-npm install express
 	5-Crear la estructura de archivos
 		sistema-gestion-tareas/
-		├── controllers
-		│   ├── tareas.js
-		│   └── auth.js
-		├── models
-		│   └── tarea.js
-		├── middlewares
-		│   └── authMiddleware.js
-		├── routes
-		│   ├── login.js
+		├── config/
+		│   └── database.js
+		├── controllers/
 		│   └── tareas.js
-		└── app.js
+		├── middlewares/
+		│   └── authMiddleware.js
+		├── models/
+		│   └── tarea.js
+		├── routes/
+		│   └── tareas.js
+		├── tests/
+		│   ├── integration/
+		│   │   └── tareas.integration.test.js
+		│   ├── data/
+		│   │   └── testData.js
+		│   └── builders/
+		│       └── tareaBuilder.js
+		├── app.js
+
 
 Instalar Mongoose en el proyecto:
 	1- instalar Mongoose en el proyecto (npm install mongoose)
@@ -104,3 +112,100 @@ Para probar CRUD:
 			"tarea": "Tarea actualizada",
 			"estado": true
 		}
+
+	6- Pruebas Endpoints Tareas
+
+		Estructura de las Pruebas
+
+		sistema-gestion-tareas/
+		├── tests/
+		│   ├── integration/
+		│   │   └── tareas.integration.test.js
+		│   ├── data/
+		│   │   └── testData.js
+		│   └── builders/
+		│       └── tareaBuilder.js
+		
+		Descripción de las Pruebas
+		GET | Obtener todas las tareas
+
+		Objetivo: Verificar que la API puede obtener todas las tareas correctamente.
+
+		Funcionamiento: Realiza una solicitud GET a /tareas y verifica que el número de tareas devueltas y sus contenidos sean correctos.
+
+		POST | Crear una nueva tarea
+
+		Objetivo: Verificar que se puede crear una nueva tarea.
+
+		Funcionamiento: Realiza una solicitud POST a /tareas con una nueva tarea y verifica que la tarea se ha creado y almacenado correctamente en la base de datos.
+
+		GET | Obtener una tarea por ID
+
+		Objetivo: Verificar que se puede obtener una tarea específica por su ID.
+
+		Funcionamiento: Realiza una solicitud GET a /tareas/:id y verifica que los detalles de la tarea devuelta sean correctos.
+
+		PUT | Actualizar una tarea existente
+
+		Objetivo: Verificar que se puede actualizar una tarea existente.
+
+		Funcionamiento: Realiza una solicitud PUT a /tareas/:id con los nuevos datos de la tarea y verifica que la tarea se ha actualizado correctamente.
+
+		DELETE | Eliminar una tarea por ID
+
+		Objetivo: Verificar que se puede eliminar una tarea por su ID.
+
+		Funcionamiento: Realiza una solicitud DELETE a /tareas/:id y verifica que la tarea se ha eliminado de la base de datos.
+
+		FILTRAR | Filtrar tareas por área, estado, prioridad y usuario
+
+		Objetivo: Verificar que se pueden filtrar tareas por diferentes criterios.
+
+		Funcionamiento: Realiza una solicitud GET a /tareas/filtrar con parámetros de filtrado y verifica que las tareas devueltas cumplen con los criterios especificados.
+
+		Configuración de la Base de Datos para Pruebas
+		
+		Se utiliza mongodb-memory-server para las pruebas, lo que permite ejecutar una instancia en memoria de MongoDB. Esto facilita pruebas rápidas y sin necesidad de una base de datos persistente. La configuración de la base de datos para pruebas se maneja en config/database.js.
+
+		Builder y Datos de Prueba
+		Builder (tareaBuilder.js): Facilita la creación de instancias de objetos de tarea con valores predeterminados, haciendo que el código de prueba sea más limpio y fácil de mantener.
+
+		Datos de Prueba (testData.js): Contiene datos predefinidos que se utilizan para poblar la base de datos durante las pruebas de integración.
+
+		Cómo Ejecutar las Pruebas
+		
+		npm run test -- --watchAll
+
+		Resultado :
+
+		Los de la consola : 	
+
+		console.log
+    		MongoDB Memory Server connected
+
+		console.log
+			Filtros recibidos: {
+			area: 'Ventas',
+			estado: 'Pendiente',
+			prioridad: 'Baja',
+			usuario: 'Usuario 4'
+			}
+
+			Resultados de las Pruebas:
+				PASS  test/integration/tareas.integration.test.js
+					API de Tareas
+						√ GET | obtener todas las tareas (57 ms)
+						√ POST | crear una nueva tarea (18 ms)
+						√ GET | obtener una tarea por ID (8 ms)
+						√ PUT | actualizar una tarea existente (11 ms)
+						√ DELETE | eliminar una tarea por ID (14 ms)
+						√ FILTRAR | filtrar tareas por área, estado, prioridad y usuario (19 ms)
+
+					Test Suites: 1 passed, 1 total
+					Tests:       6 passed, 6 total
+					Snapshots:   0 total
+					Time:        1.719 s, estimated 2 s
+						
+
+
+		
