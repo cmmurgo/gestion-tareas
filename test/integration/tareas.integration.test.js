@@ -35,7 +35,7 @@ describe('API de Tareas', () => {
     });
 
     test('POST | crear una nueva tarea', async () => {
-        const nuevaTarea = tareasData[4];
+        const nuevaTarea = tareasData[2];
 
         const res = await request(app)
             .post('/tareas')
@@ -101,7 +101,7 @@ describe('API de Tareas', () => {
     });
 
     test('POST | crear una nueva tarea con token', async () => {
-        const nuevaTarea = tareasData[4];
+        const nuevaTarea = tareasData[3];
 
         const res = await request(app)
             .post('/tareas')
