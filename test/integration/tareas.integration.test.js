@@ -6,6 +6,8 @@ const { connectDB, closeDB } = require(path.join(__dirname, '..', '..', 'config'
 const Tarea = require(path.join(__dirname, '..', '..', 'models', 'tarea'));
 const tareasData = require(path.join(__dirname, '..', 'data', 'testData'));
 const { Builder } = require(path.join(__dirname, '..', 'builders', 'tareaBuilder'));
+const crypto = require('crypto');
+const token = crypto.randomBytes(32).toString('hex');
 
 beforeAll(async () => {
     await connectDB();
@@ -27,10 +29,8 @@ describe('API de Tareas', () => {
 
     test('GET | obtener todas las tareas', async () => {
         const res = await request(app).get('/tareas').expect(200);
-
         expect(res.body.length).toBe(5);
-
-        const tareasOrdenadas = res.body.sort((a, b) => a.id - b.id); // Ordenar tareas por ID
+        const tareasOrdenadas = res.body.sort((a, b) => a.id - b.id);
         expect(tareasOrdenadas[0].tarea).toBe('Tarea de prueba 1');
     });
 
@@ -82,7 +82,6 @@ describe('API de Tareas', () => {
         expect(tareaActualizada).toEqual(expectedActualizacion);
     });
 
-
     test('DELETE | eliminar una tarea por ID', async () => {
         const tarea = await Tarea.findOne({ id: 1 });
 
@@ -102,9 +101,7 @@ describe('API de Tareas', () => {
     });
 
     test('POST | crear una nueva tarea con token', async () => {
-        const nuevaTarea = tareasData[3];
-
-        const token = 'tu_token_de_autenticacion_aqui'; // Reemplaza con el token real
+        const nuevaTarea = tareasData[4];
 
         const res = await request(app)
             .post('/tareas')
@@ -121,4 +118,5 @@ describe('API de Tareas', () => {
         const savedTarea = await Tarea.findById(res.body._id);
         expect(savedTarea.tarea).toBe(nuevaTarea.tarea);
     });
+
 });
