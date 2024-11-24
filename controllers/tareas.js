@@ -1,6 +1,6 @@
 const Tarea = require('../models/tarea');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user'); 
+const User = require('../models/user');
 
 // Controlador para obtener todas las tareas
 exports.obtenerTareas = async (req, res) => {
@@ -12,22 +12,21 @@ exports.obtenerTareas = async (req, res) => {
     }
 };
 
-// Controlador para obtener todas las tareas
+// Controlador para ver todas las tareas
 exports.verTareas = async (req, res) => {
     try {
-        const tareas = await Tarea.find(); 
-        res.render('tareas', { tareas });  
+        const tareas = await Tarea.find();
+        res.render('tareas', { tareas });
     } catch (error) {
         console.error('Error al obtener las tareas:', error);
         res.status(500).send('Error al obtener las tareas');
     }
 };
 
-// Controlador para obtener una tarea por ID para Thunder Client
+// Controlador para obtener una tarea por ID
 exports.obtenerTareaPorId = async (req, res) => {
     try {
-        // Busca por el campo 'id'
-        const tarea = await Tarea.findOne({ id: req.params.id });
+        const tarea = await Tarea.findById(req.params.id);
         if (!tarea) {
             return res.status(404).json({ error: 'Tarea no encontrada' });
         }
@@ -37,7 +36,7 @@ exports.obtenerTareaPorId = async (req, res) => {
     }
 };
 
-// Controlador para obtener todas las tareas con filtros para Thunder Client
+// Controlador para obtener tareas con filtros
 exports.obtenerTareasFiltros = async (req, res) => {
     try {
         const { area, estado, prioridad, usuario } = req.query;
@@ -57,7 +56,7 @@ exports.obtenerTareasFiltros = async (req, res) => {
     }
 };
 
-// Controlador para crear una nueva tarea para Thunder Client
+// Controlador para crear una nueva tarea
 exports.crearTarea = async (req, res) => {
     const nuevaTarea = new Tarea(req.body);
     try {
@@ -68,13 +67,12 @@ exports.crearTarea = async (req, res) => {
     }
 };
 
-// Controlador para crear una nueva tarea para formulario
+// Controlador para crear una nueva tarea desde formulario
 exports.crearTareaForm = async (req, res) => {
-    const { id, tarea, usuario, area, estado, prioridad, fechaVencimiento } = req.body;
+    const { tarea, usuario, area, estado, prioridad, fechaVencimiento } = req.body;
 
     try {
         const nuevaTarea = new Tarea({
-            id,
             tarea,
             usuario,
             area,
@@ -83,22 +81,18 @@ exports.crearTareaForm = async (req, res) => {
             fechaVencimiento,
         });
 
-        await nuevaTarea.save(); 
-        res.redirect('/'); 
+        await nuevaTarea.save();
+        res.redirect('/');
     } catch (error) {
         console.error('Error al guardar la tarea:', error);
         res.status(500).send('Hubo un error al crear la tarea.');
     }
 };
 
-// Controlador para actualizar una tarea para Thunder Client
+// Controlador para actualizar una tarea por ID
 exports.actualizarTarea = async (req, res) => {
     try {
-        const tareaActualizada = await Tarea.findOneAndUpdate(
-            { id: req.params.id },   // Busca por el campo `id` numérico
-            req.body,
-            { new: true }             // Retorna la tarea actualizada
-        );
+        const tareaActualizada = await Tarea.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!tareaActualizada) {
             return res.status(404).json({ error: 'Tarea no encontrada' });
         }
@@ -108,22 +102,22 @@ exports.actualizarTarea = async (req, res) => {
     }
 };
 
-// Controlador para editar una tarea por formulario
+// Controlador para editar una tarea desde formulario
 exports.editarTareaForm = async (req, res) => {
     try {
         const { id } = req.params;
-        const tarea = await Tarea.findById(id); 
+        const tarea = await Tarea.findById(id);
         if (!tarea) {
             return res.status(404).send('Tarea no encontrada');
         }
-        res.render('editarTarea', { tarea }); 
+        res.render('editarTarea', { tarea });
     } catch (error) {
         console.error('Error al obtener la tarea para editar:', error);
         res.status(500).send('Error al cargar la tarea para editar');
     }
 };
 
-// Controlador para actualizar una tarea por formulario
+// Controlador para actualizar una tarea desde formulario
 exports.actualizarTareaForm = async (req, res) => {
     try {
         const { id } = req.params;
@@ -146,37 +140,37 @@ exports.actualizarTareaForm = async (req, res) => {
     }
 };
 
-// Controlador para eliminar una tarea por Thunder Client
+// Controlador para eliminar una tarea por ID
 exports.eliminarTarea = async (req, res) => {
     try {
-        const tareaEliminada = await Tarea.findOneAndDelete({ id: req.params.id });  
+        const tareaEliminada = await Tarea.findByIdAndDelete(req.params.id);
         if (!tareaEliminada) {
             return res.status(404).json({ error: 'Tarea no encontrada' });
         }
-        res.status(204).send(); 
+        res.status(204).send();
     } catch (err) {
         res.status(500).json({ error: 'Error al eliminar la tarea' });
     }
 };
 
-// Controlador para eliminar una tarea por formulario
+// Controlador para eliminar una tarea desde formulario
 exports.eliminarTareaForm = async (req, res) => {
     try {
         const { id } = req.params;
-        await Tarea.findByIdAndDelete(id); 
-        res.redirect('/tareas/ver'); 
+        await Tarea.findByIdAndDelete(id);
+        res.redirect('/tareas/ver');
     } catch (error) {
         console.error('Error al eliminar la tarea:', error);
         res.status(500).send('Error al eliminar la tarea');
     }
 };
 
-// Controlador para obtener el último ID
+// Controlador para obtener el último ID (opcional si necesario)
 exports.obtenerUltimoId = async (req, res) => {
     try {
-        const ultimaTarea = await Tarea.findOne().sort({ id: -1 }); // Buscar la tarea con el ID más alto
-        const ultimoId = ultimaTarea ? ultimaTarea.id : 0; // Si no hay tareas, inicia en 0
-        res.json({ ultimoId: ultimoId + 1 }); // Retornar el siguiente ID
+        const ultimaTarea = await Tarea.findOne().sort({ _id: -1 }); // Buscar la tarea con el ID más alto
+        const ultimoId = ultimaTarea ? ultimaTarea._id : null;
+        res.json({ ultimoId });
     } catch (err) {
         console.error('Error al obtener el último ID:', err);
         res.status(500).json({ error: 'Error al obtener el último ID' });
@@ -185,71 +179,67 @@ exports.obtenerUltimoId = async (req, res) => {
 
 // Función para obtener el token de autorización desde el encabezado de la solicitud
 const getTokenFrom = (request) => {
-    const authorization = request.get('authorization'); 
-    console.log('Authorization Header:', authorization); 
-    
+    const authorization = request.get('authorization');
+    console.log('Authorization Header:', authorization);
+
     // Si el encabezado existe y comienza con 'Bearer ', extraemos el token
     if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-      return authorization.substring(7); // Devuelve el token quitando 'Bearer ' al principio
+        return authorization.substring(7); // Devuelve el token quitando 'Bearer ' al principio
     }
-    return null; 
-  };
-  
+    return null;
+};
 
 // Ruta para crear una nueva tarea con token
 exports.crearTareaConToken = async (request, response) => {
-    const body = request.body; 
-    const token = getTokenFrom(request); 
-  
-    try {
-      // Si no existe el token, respondemos con un error 401 (No autorizado)
-      if (!token) {
-        return response.status(401).json({ error: 'Token faltante' });
-      }
-  
-      // Intentamos verificar el token usando la clave secreta del entorno
-      const decodedToken = jwt.verify(token, process.env.SECRET);
-      
-      // Si el token no contiene un ID de usuario, respondemos con un error 401 (Token inválido)
-      if (!decodedToken.id) {
-        return response.status(401).json({ error: 'Token inválido' });
-      }
-  
-      // Intentamos encontrar al usuario en la base de datos usando el ID decodificado del token
-      const user = await User.findById(decodedToken.id);
-      
-      // Si el usuario no existe, respondemos con un error 404 (Usuario no encontrado)
-      if (!user) {
-        return response.status(404).json({ error: 'Usuario no encontrado' });
-      }
-  
-      // Creamos una nueva tarea con los datos obtenidos del cuerpo de la solicitud
-      const nuevaTarea = new Tarea({
-        id: body.id,
-        tarea: body.tarea,
-        usuario: body.usuario,
-        area: body.area,
-        estado: body.estado,
-        prioridad: body.prioridad,
-        fechaVencimiento: new Date(),
-     
-      });
-  
-      const savednuevaTarea = await nuevaTarea.save();
-  
-      await user.save(); 
-  
-      // Respondemos con el post recién creado y un código de estado 201 (Creado)
-      response.status(201).json(savednuevaTarea);
-    } catch (error) {
-      console.error('Error al crear nuevaTarea:', error); 
-      // Si el error es relacionado con el token, respondemos con un error 401 (Token inválido)
-      if (error.name === 'JsonWebTokenError') {
-        return response.status(401).json({ error: 'Token inválido' });
-      }
-      // Si ocurrió otro error, respondemos con un error 500 (Problema interno del servidor)
-      response.status(500).json({ error: 'Error al crear la nuevaTarea' });
-    }
-  };
+    const body = request.body;
+    const token = getTokenFrom(request);
 
-  
+    try {
+        // Si no existe el token, respondemos con un error 401 (No autorizado)
+        if (!token) {
+            return response.status(401).json({ error: 'Token faltante' });
+        }
+
+        // Intentamos verificar el token usando la clave secreta del entorno
+        const decodedToken = jwt.verify(token, process.env.SECRET);
+
+        // Si el token no contiene un ID de usuario, respondemos con un error 401 (Token inválido)
+        if (!decodedToken.id) {
+            return response.status(401).json({ error: 'Token inválido' });
+        }
+
+        // Intentamos encontrar al usuario en la base de datos usando el ID decodificado del token
+        const user = await User.findById(decodedToken.id);
+
+        // Si el usuario no existe, respondemos con un error 404 (Usuario no encontrado)
+        if (!user) {
+            return response.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        // Creamos una nueva tarea con los datos obtenidos del cuerpo de la solicitud
+        const nuevaTarea = new Tarea({
+            tarea: body.tarea,
+            usuario: body.usuario,
+            area: body.area,
+            estado: body.estado,
+            prioridad: body.prioridad,
+            fechaVencimiento: new Date(),
+        });
+
+        const savednuevaTarea = await nuevaTarea.save();
+
+        await user.save();
+
+        // Respondemos con la tarea recién creada y un código de estado 201 (Creado)
+        response.status(201).json(savednuevaTarea);
+    } catch (error) {
+        console.error('Error al crear nuevaTarea:', error);
+        // Si el error es relacionado con el token, respondemos con un error 401 (Token inválido)
+        if (error.name === 'JsonWebTokenError') {
+            return response.status(401).json({ error: 'Token inválido' });
+        }
+        // Si ocurrió otro error, respondemos con un error 500 (Problema interno del servidor)
+        response.status(500).json({ error: 'Error al crear la nuevaTarea' });
+    }
+};
+
