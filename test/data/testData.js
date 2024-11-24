@@ -6,7 +6,7 @@ const tareasData = [
     area: 'Compras',
     estado: 'Pendiente',
     prioridad: 'Media',
-    fechaVencimiento: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 días en el futuro
+    fechaVencimiento: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const tareasData = [
     area: 'Ventas',
     estado: 'En progreso',
     prioridad: 'Alta',
-    fechaVencimiento: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) // 14 días en el futuro
+    fechaVencimiento: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const tareasData = [
     area: 'Compras',
     estado: 'Pendiente',
     prioridad: 'Media',
-    fechaVencimiento: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 días en el futuro
+    fechaVencimiento: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
   },
   {
     id: 4,
@@ -33,8 +33,28 @@ const tareasData = [
     area: 'Ventas',
     estado: 'Pendiente',
     prioridad: 'Baja',
-    fechaVencimiento: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) // 14 días en el futuro
+    fechaVencimiento: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+  },
+  {
+    id: 5,
+    tarea: 'Nueva tarea de prueba',
+    usuario: 'Nuevo usuario',
+    area: 'Producción',
+    estado: 'Pendiente',
+    prioridad: 'Baja',
+    fechaVencimiento: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+  },
+  {
+    id: 6,
+    tarea: 'Tarea actualizada',
+    usuario: 'Usuario actualizado',
+    area: 'Inventario',
+    estado: 'Completada',
+    prioridad: 'Alta',
+    fechaVencimiento: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000)
   }
 ];
 
 module.exports = tareasData;
+
+
