@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 // Definir el esquema de la tarea
 const tareaSchema = new mongoose.Schema({
-    id: { type: Number, required: true },
     tarea: { type: String, required: true },
     usuario: { type: String, required: true },
     area: { 
@@ -22,7 +21,18 @@ const tareaSchema = new mongoose.Schema({
     },
     fechaCreacion: { type: Date, default: Date.now },
     fechaVencimiento: { type: Date, required: true },
-
 });
 
-module.exports = mongoose.model('Tarea', tareaSchema);
+tareaSchema.set('toJSON', {
+    transform: (document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString();
+        delete returnedObject._id;
+        delete returnedObject.__v;
+    }
+});
+
+const Tarea = mongoose.model('Tarea', tareaSchema);
+
+module.exports = Tarea;
+
+
