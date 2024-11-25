@@ -33,12 +33,19 @@ app.get('/logout', (req, res) => {
 });
 
 // Conectar a MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/tareasDB', { 
-    useNewUrlParser: true, // Configura Mongoose para usar el nuevo analizador de URL de MongoDB
-    useUnifiedTopology: true // Configura Mongoose para usar el nuevo motor de administración de conexiones
-})
-.then(() => console.log('Conectado a la base de datos')) 
-.catch(err => console.error('Error de conexión a la base de datos:', err)); 
+const startServer = async () => {
+    if (process.env.NODE_ENV !== 'test') {
+        try {
+            await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/tareasDB', { 
+                useNewUrlParser: true, // Configura Mongoose para usar el nuevo analizador de URL de MongoDB
+                useUnifiedTopology: true // Configura Mongoose para usar el nuevo motor de administración de conexiones
+            });
+            console.log('Conectado a la base de datos'); 
+        } catch (err) {
+            console.error('Error de conexión a la base de datos:', err); 
+        }
+    }
+};
 
 // Middleware para analizar datos en formato URL-encoded
 app.use(express.urlencoded({ extended: false })); 
@@ -69,9 +76,11 @@ app.use('/api', tareasRoutes);
 // o si está siendo usado como módulo (como lo hace Vercel). 
 
 if (require.main === module) {
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-        console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+    startServer().then(() => {
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+        });
     });
 } else {
     module.exports = app; // Exporta la app si se usa en un entorno como Vercel

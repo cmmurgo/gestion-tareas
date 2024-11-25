@@ -52,17 +52,25 @@ Pasos para crear el proyecto:
 	4-npm install express
 	5-Crear la estructura de archivos
 		sistema-gestion-tareas/
-		├── controllers
-		│   ├── tareas.js
-		│   └── auth.js
-		├── models
-		│   └── tarea.js
-		├── middlewares
-		│   └── authMiddleware.js
-		├── routes
-		│   ├── login.js
+		├── config/
+		│   └── database.js
+		├── controllers/
 		│   └── tareas.js
-		└── app.js
+		├── middlewares/
+		│   └── authMiddleware.js
+		├── models/
+		│   └── tarea.js
+		├── routes/
+		│   └── tareas.js
+		├── tests/
+		│   ├── integration/
+		│   │   └── tareas.integration.test.js
+		│   ├── data/
+		│   │   └── testData.js
+		│   └── builders/
+		│       └── tareaBuilder.js
+		├── app.js
+
 
 Instalar Mongoose en el proyecto:
 	1- instalar Mongoose en el proyecto (npm install mongoose)
@@ -104,3 +112,90 @@ Para probar CRUD:
 			"tarea": "Tarea actualizada",
 			"estado": true
 		}
+
+	6- Pruebas Endpoints Tareas
+
+		Estructura de las Pruebas
+
+		sistema-gestion-tareas/
+		├── tests/
+		│   ├── integration/
+		│   │   └── tareas.integration.test.js
+		│   ├── data/
+		│   │   └── testData.js
+		│   └── builders/
+		│       └── tareaBuilder.js
+		
+		
+		Descripción de las Pruebas
+		
+		GET | Obtener todas las tareas
+
+		Objetivo: Verificar que la API puede obtener todas las tareas correctamente.
+
+		POST | Crear una nueva tarea
+
+		Objetivo: Verificar que se puede crear una nueva tarea.
+
+		
+		GET | Obtener una tarea por ID
+
+		Objetivo: Verificar que se puede obtener una tarea específica por su ID.
+
+		
+		PUT | Actualizar una tarea existente
+
+		Objetivo: Verificar que se puede actualizar una tarea existente.
+
+		
+		DELETE | Eliminar una tarea por ID
+
+		Objetivo: Verificar que se puede eliminar una tarea por su ID.
+
+		
+		FILTRAR | Filtrar tareas por área, estado, prioridad y usuario
+
+		Objetivo: Verificar que se pueden filtrar tareas por diferentes criterios, en este caso área.
+
+		
+		Configuración de la Base de Datos para Pruebas
+		
+
+
+		Cómo Ejecutar las Pruebas
+		
+		npm run test -- --watchAll
+
+		Resultado :
+
+			Las Impresiones por  Consola : 	
+
+			console.log
+				MongoDB Memory Server connected
+
+			console.log
+				Filtros recibidos: {
+				area: 'Ventas',
+				estado: 'Pendiente',
+				prioridad: 'Baja',
+				usuario: 'Usuario 4'
+				}
+
+			Resultados de las Pruebas:
+				PASS  test/integration/tareas.integration.test.js
+					API de Tareas
+						√ GET | obtener todas las tareas (57 ms)
+						√ POST | crear una nueva tarea (18 ms)
+						√ GET | obtener una tarea por ID (8 ms)
+						√ PUT | actualizar una tarea existente (11 ms)
+						√ DELETE | eliminar una tarea por ID (14 ms)
+						√ FILTRAR | filtrar tareas por área, estado, prioridad y usuario (19 ms)
+
+					Test Suites: 1 passed, 1 total
+					Tests:       6 passed, 6 total
+					Snapshots:   0 total
+					Time:        1.719 s, estimated 2 s
+						
+
+
+		
